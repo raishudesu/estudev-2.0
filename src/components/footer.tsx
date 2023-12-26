@@ -6,7 +6,7 @@ const Footer = () => {
           <p
             className={`scroll-m-20 text-xl font-bold tracking-tight transition-colors first:mt-0`}
           >
-            Estu<span className="text-primary">dev</span>
+            EStu<span className="text-primary">dev</span>
           </p>
         </div>
         <p className="leading-7">@2023 All rights reserved.</p>

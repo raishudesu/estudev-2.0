@@ -1,5 +1,5 @@
 import Image from "next/image";
-import rocket from "@/assets/rocket.svg";
+import team from "@/assets/team.svg";
 import GlowTop from "@/assets/glow-top.svg";
 
 const Community = () => {
@@ -31,7 +31,7 @@ const Community = () => {
           something bigger.
         </p>
         <Image
-          src={rocket}
+          src={team}
           alt="rocket"
           className="w-full max-w-screen-sm pt-3"
         />

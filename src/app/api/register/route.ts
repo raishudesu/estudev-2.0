@@ -2,6 +2,7 @@ import prisma from "@/lib/db";
 import { NextResponse } from "next/server";
 import { hash } from "bcrypt";
 import { userServerSchema } from "@/lib/zod";
+import { registerUser } from "@/services/register.service";
 
 export async function POST(req: Request) {
   try {
@@ -9,41 +10,7 @@ export async function POST(req: Request) {
 
     const { email, username, gender, password } = userServerSchema.parse(body); // VALIDATE BODY THRU ZOD SCHEMA
 
-    // CHECK UNIQUE EMAIL
-    const existingEmail = await prisma.user.findUnique({
-      where: { email: email },
-    });
-
-    if (existingEmail) {
-      return NextResponse.json(
-        { user: null, message: "A user with this email already exists" },
-        { status: 409 }
-      );
-    }
-
-    // CHECK UNIQUE USERNAME
-    const existingUsername = await prisma.user.findUnique({
-      where: { username: username },
-    });
-
-    if (existingUsername) {
-      return NextResponse.json(
-        { user: null, message: "A user with this username already exists" },
-        { status: 409 }
-      );
-    }
-
-    // HASH PASSWORD
-    const hashedPwd = await hash(password, 10);
-
-    const newUser = await prisma.user.create({
-      data: {
-        username,
-        email,
-        gender,
-        password: hashedPwd,
-      },
-    });
+    const newUser = await registerUser(email, username, gender, password);
 
     // EXCLUDE PASSWORD UPON SUCCESS RESPONSE
     const { password: newUserPassword, ...rest } = newUser;
