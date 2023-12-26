@@ -17,9 +17,8 @@ model Comment {
   updatedAt  DateTime
   authorName String
   type       String?
-  User       User     @relation(fields: [authorId], references: [id])
-  Thread     Thread   @relation(fields: [threadId], references: [id])
-  Reply      Reply[]
+  author     User     @relation(fields: [authorId], references: [id])
+  threads    Thread   @relation(fields: [threadId], references: [id])
 }
 
 model Follows {
@@ -32,20 +31,6 @@ model Follows {
   User_Follows_followingIdToUser User     @relation("Follows_followingIdToUser", fields: [followingId], references: [id])
 }
 
-model Reply {
-  id         Int      @id @default(autoincrement())
-  authorId   Int
-  commentId  Int
-  content    String
-  stars      Int
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime
-  authorName String
-  type       String?
-  User       User     @relation(fields: [authorId], references: [id])
-  Comment    Comment  @relation(fields: [commentId], references: [id])
-}
-
 model Thread {
   id        Int       @id @default(autoincrement())
   authorId  Int
@@ -56,8 +41,8 @@ model Thread {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   type      String?
-  Comment   Comment[]
-  User      User      @relation(fields: [authorId], references: [id])
+  comments  Comment[]
+  author    User      @relation(fields: [authorId], references: [id])
 }
 
 model User {
@@ -70,9 +55,8 @@ model User {
   password                          String
   createdAt                         DateTime  @default(now())
   updatedAt                         DateTime  @updatedAt
-  Comment                           Comment[]
+  comments                          Comment[]
   Follows_Follows_followerIdToUser  Follows[] @relation("Follows_followerIdToUser")
   Follows_Follows_followingIdToUser Follows[] @relation("Follows_followingIdToUser")
-  Reply                             Reply[]
-  Thread                            Thread[]
+  threads                           Thread[]
 }
