@@ -1,0 +1,79 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Comment {
+  id         Int      @id @default(autoincrement())
+  authorId   Int
+  threadId   Int
+  content    String
+  stars      Int?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime
+  authorName String
+  type       String?
+  User       User     @relation(fields: [authorId], references: [id])
+  Thread     Thread   @relation(fields: [threadId], references: [id])
+  Reply      Reply[]
+}
+
+model Follows {
+  id                             Int      @id @default(autoincrement())
+  followerId                     Int
+  followingId                    Int
+  createdAt                      DateTime @default(now())
+  updatedAt                      DateTime
+  User_Follows_followerIdToUser  User     @relation("Follows_followerIdToUser", fields: [followerId], references: [id])
+  User_Follows_followingIdToUser User     @relation("Follows_followingIdToUser", fields: [followingId], references: [id])
+}
+
+model Reply {
+  id         Int      @id @default(autoincrement())
+  authorId   Int
+  commentId  Int
+  content    String
+  stars      Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime
+  authorName String
+  type       String?
+  User       User     @relation(fields: [authorId], references: [id])
+  Comment    Comment  @relation(fields: [commentId], references: [id])
+}
+
+model Thread {
+  id         Int       @id @default(autoincrement())
+  authorId   Int
+  title      String
+  category   String
+  stars      Int?
+  content    String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime
+  authorName String
+  type       String?
+  Comment    Comment[]
+  User       User      @relation(fields: [authorId], references: [id])
+}
+
+model User {
+  id                                Int       @id @default(autoincrement())
+  username                          String    @unique
+  email                             String    @unique
+  gender                            String
+  bio                               String?
+  links                             String[]
+  password                          String
+  createdAt                         DateTime  @default(now())
+  updatedAt                         DateTime
+  Comment                           Comment[]
+  Follows_Follows_followerIdToUser  Follows[] @relation("Follows_followerIdToUser")
+  Follows_Follows_followingIdToUser Follows[] @relation("Follows_followingIdToUser")
+  Reply                             Reply[]
+  Thread                            Thread[]
+}
