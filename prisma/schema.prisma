@@ -17,8 +17,8 @@ model Comment {
   updatedAt  DateTime
   authorName String
   type       String?
-  author     User     @relation(fields: [authorId], references: [id])
-  threads    Thread   @relation(fields: [threadId], references: [id])
+  author     User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  threads    Thread   @relation(fields: [threadId], references: [id], onDelete: Cascade)
 }
 
 model Follows {
@@ -42,7 +42,7 @@ model Thread {
   updatedAt DateTime  @updatedAt
   type      String?
   comments  Comment[]
-  author    User      @relation(fields: [authorId], references: [id])
+  author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
 }
 
 model User {
