@@ -65,7 +65,6 @@ export const threadSchema = z.object({
     message: "Content must be at least 15 characters.",
   }),
   authorId: z.number(),
-  authorName: z.string(),
 });
 
 export const updateThreadSchema = z.object({

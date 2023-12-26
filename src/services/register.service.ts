@@ -1,7 +1,7 @@
 import prisma from "@/lib/db";
 import { hash } from "bcrypt";
 
-export const registerUser = async (
+export const registerService = async (
   email: string,
   username: string,
   gender: string,
