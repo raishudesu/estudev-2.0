@@ -3,7 +3,11 @@ import { Inter } from "next/font/google";
 import "@/styles/globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import { ThemeProvider } from "@/components/theme-provider";
+import {
+  AuthProvider,
+  TanstackProvider,
+  ThemeProvider,
+} from "@/providers/providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,18 +25,22 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Header />
-          <main className="pt-12 lg:pt-20 min-h-screen overflow-hidden lg:p-6">
-            {children}
-          </main>
-          <Footer />
-        </ThemeProvider>
+        <TanstackProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <AuthProvider>
+              <Header />
+              <main className="pt-12 lg:pt-20 min-h-screen overflow-hidden lg:p-6">
+                {children}
+              </main>
+              <Footer />
+            </AuthProvider>
+          </ThemeProvider>
+        </TanstackProvider>
       </body>
     </html>
   );
