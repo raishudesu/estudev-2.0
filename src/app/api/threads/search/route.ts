@@ -1,9 +1,9 @@
 import { authOptions } from "@/lib/auth";
-import { searchThreadsService } from "@/services/search.service";
+import { searchThreadsService } from "@/services/threads.service";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
-export async function GET(req: Request) {
+export async function POST(req: Request) {
   try {
     const session = await getServerSession(authOptions);
     if (!session)

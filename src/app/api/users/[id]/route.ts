@@ -15,7 +15,7 @@ export async function GET(req: Request, { params }: { params: Params }) {
         { status: 401 }
       );
 
-    const user = await getUserService(id as number);
+    const user = await getUserService(Number(id));
 
     return NextResponse.json({ ok: true, user }, { status: 200 });
   } catch (error) {
