@@ -11,7 +11,7 @@ import { Code2 } from "lucide-react";
 
 const Header = () => {
   return (
-    <header className="z-50 fixed px-6 backdrop-blur-xl w-full flex justify-center border-b dark:shadow-slate-900">
+    <header className="z-50 px-6 backdrop-blur-xl w-full flex justify-center border-b dark:shadow-slate-900">
       <div className="w-full max-w-screen-xl flex gap-3 justify-between  items-center h-14">
         <div className="flex gap-6">
           <Link

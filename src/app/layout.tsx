@@ -34,9 +34,7 @@ export default function RootLayout({
           >
             <AuthProvider>
               <Header />
-              <main className="pt-12 lg:pt-20 min-h-screen overflow-hidden lg:p-6">
-                {children}
-              </main>
+              <main className="min-h-screen overflow-hidden">{children}</main>
               <Footer />
             </AuthProvider>
           </ThemeProvider>
